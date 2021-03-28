@@ -32,24 +32,7 @@ endif
 
 exec s:Python "import vimfullscreen"
 
-let g:fullscreen_active = 0
-
 function fullscreen#windows#maximize()
-  if fullscreen#windows#is_active()
-    return
-  endif
   exec s:Python "vimfullscreen.maximize()"
-endfunction
-
-function fullscreen#windows#activate()
-  exec s:Python "vimfullscreen.activate()"
-endfunction
-
-function fullscreen#windows#deactivate()
-  exec s:Python "vimfullscreen.deactivate()"
-endfunction
-
-function fullscreen#windows#is_active()
-  return g:fullscreen_active
 endfunction
 

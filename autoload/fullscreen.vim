@@ -24,7 +24,7 @@
 " (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 " SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-let g:fullscreen_python_win32ext_available = 0
+let g:fullscreen_python_available = 0
 
 function! s:check_win32_extensions()
   if has('python3')
@@ -32,22 +32,13 @@ function! s:check_win32_extensions()
   else
     silent! python import vimfullscreen
   endif
-  if !g:fullscreen_python_win32ext_available
+  if !g:fullscreen_python_available
     echomsg "VimFullscreen: Python Win32 Extensions not found. Please install for best fullscreen experience."
   endif
-  return g:fullscreen_python_win32ext_available
+  return g:fullscreen_python_available
 endfunction
 
 if has('fullscreen')
-
-  " MacVim has a native fullscreen mode
-  function fullscreen#toggle()
-    if &fullscreen
-      set nofullscreen
-    else
-      set fullscreen
-    endif
-  endfunction
 
   function fullscreen#maximize()
     call fullscreen#default#maximize()
@@ -55,33 +46,12 @@ if has('fullscreen')
 
 elseif has('gui_win32') && (has('python3') || has('python')) && s:check_win32_extensions()
   
-  function fullscreen#toggle()
-    if fullscreen#windows#is_active()
-      call fullscreen#windows#deactivate()
-    else
-      call fullscreen#windows#activate()
-    endif
-  endfunction
-
   " Simulate maximize
   function fullscreen#maximize()
     call fullscreen#windows#maximize()
   endfunction
 
-  function fullscreen#exit()
-    if fullscreen#windows#is_active()
-      call fullscreen#windows#deactivate()
-    endif
-  endfunction
-
-  au VimLeave * call fullscreen#exit()
-
 else
-
-  " Sorry!
-  function fullscreen#toggle()
-    echoerr "Fullscreen mode not implemented for this system, sorry!"
-  endfunction
 
   function fullscreen#maximize()
     call fullscreen#default#maximize()

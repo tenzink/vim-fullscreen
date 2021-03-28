@@ -28,25 +28,7 @@ if !has('gui_running') || exists('g:loaded_fullscreen')
   finish
 endif
 
-let s:save_cpo = &cpo
-set cpo&vim
-
-if !exists('g:fullscreen_default_keymap')
-  let g:fullscreen_default_keymap = 1
-endif
-
 command! MaximizeWindow   call fullscreen#maximize()
-command! ToggleFullscreen call fullscreen#toggle()
-
-nnoremap <silent> <Plug>(fullscreen_maximize) :call fullscreen#maximize()<CR>
-nnoremap <silent> <Plug>(fullscreen_toggle)   :call fullscreen#toggle()<CR>
-
-if g:fullscreen_default_keymap != 0
-  nmap <silent> <C-CR> <Plug>(fullscreen_toggle)
-endif
-
-let &cpo = s:save_cpo
-unlet! s:save_cpo
 
 let g:loaded_fullscreen = 1
 
